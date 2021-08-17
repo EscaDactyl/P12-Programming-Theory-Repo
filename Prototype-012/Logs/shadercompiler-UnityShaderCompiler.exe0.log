@@ -96,3 +96,9 @@ Cmd: preprocess
 
 Cmd: initializeCompiler
 
+<<<<<<< Updated upstream
+=======
+Cmd: shutdown
+
+Quitting shader compiler process
+>>>>>>> Stashed changes
