@@ -160,3 +160,19 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 150.760074 seconds.
+  path: Assets/Scripts
+  artifactKey: Guid(f908f28ca5334ff4a8c0a805ad227895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts using Guid(f908f28ca5334ff4a8c0a805ad227895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19b7bd2973568d9409d23c3a09204fc7') in 0.007760 seconds 
+  Import took 0.010182 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000652 seconds.
+  path: Assets/Scripts
+  artifactKey: Guid(f908f28ca5334ff4a8c0a805ad227895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts using Guid(f908f28ca5334ff4a8c0a805ad227895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19b7bd2973568d9409d23c3a09204fc7') in 0.003569 seconds 
+  Import took 0.006451 seconds .
+
