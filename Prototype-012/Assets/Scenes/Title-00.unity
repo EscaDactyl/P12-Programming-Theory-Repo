@@ -404,11 +404,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -483,9 +479,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76775182}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
---- !u!1 &167288749
+--- !u!1 &508305158
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -493,23 +487,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 167288752}
-  - component: {fileID: 167288751}
-  - component: {fileID: 167288750}
+  - component: {fileID: 508305161}
+  - component: {fileID: 508305160}
+  - component: {fileID: 508305159}
   m_Layer: 5
-  m_Name: BlackImage
+  m_Name: Black Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &167288750
+  m_IsActive: 0
+--- !u!114 &508305159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167288749}
+  m_GameObject: {fileID: 508305158}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -533,21 +527,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &167288751
+--- !u!222 &508305160
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167288749}
+  m_GameObject: {fileID: 508305158}
   m_CullTransparentMesh: 1
---- !u!224 &167288752
+--- !u!224 &508305161
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167288749}
+  m_GameObject: {fileID: 508305158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -560,7 +554,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
->>>>>>> Stashed changes
 --- !u!1 &517752788
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,11 +613,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: v0.1 for Unity Junior Programmer Pathway Tutorial
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -710,10 +699,7 @@ GameObject:
   - component: {fileID: 520731996}
   - component: {fileID: 520731998}
   - component: {fileID: 520731997}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 520731999}
->>>>>>> Stashed changes
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -762,11 +748,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Options
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -841,8 +823,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520731995}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!114 &520731999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +837,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionSfx: {fileID: 8300000, guid: defa821b9870a4f3daf2db62ae1a43f2, type: 3}
   sceneAudio: {fileID: 36945377}
->>>>>>> Stashed changes
 --- !u!1 &589266844
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,10 +848,7 @@ GameObject:
   - component: {fileID: 589266845}
   - component: {fileID: 589266847}
   - component: {fileID: 589266846}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 589266848}
->>>>>>> Stashed changes
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -921,11 +897,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1000,8 +972,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589266844}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!114 &589266848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,7 +986,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionSfx: {fileID: 8300000, guid: 256e94d7cc7d148fc9da89570896ac37, type: 3}
   sceneAudio: {fileID: 36945377}
->>>>>>> Stashed changes
 --- !u!1 &793227649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,11 +1045,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Run Ball Wiz Run
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1373,10 +1338,7 @@ RectTransform:
   - {fileID: 76775183}
   - {fileID: 1628459021}
   - {fileID: 1269980157}
-<<<<<<< Updated upstream
-=======
-  - {fileID: 167288752}
->>>>>>> Stashed changes
+  - {fileID: 508305161}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1402,16 +1364,9 @@ MonoBehaviour:
   - {fileID: 520731995}
   - {fileID: 1635276264}
   cursor: {fileID: 1269980156}
-<<<<<<< Updated upstream
+  blackImage: {fileID: 508305159}
   cursorSfx: {fileID: 8300000, guid: c33b0c5db5b354f099e05fa30b4605e8, type: 3}
   sceneAudio: {fileID: 36945377}
-=======
-  blackImage: {fileID: 167288750}
-  cursorSfx: {fileID: 8300000, guid: c33b0c5db5b354f099e05fa30b4605e8, type: 3}
-  sceneAudio: {fileID: 36945377}
-  axisDown: 0
-  selectionMade: 0
->>>>>>> Stashed changes
   buttonSelectionIndex: 0
 --- !u!1 &1540041226
 GameObject:
@@ -1583,10 +1538,7 @@ GameObject:
   - component: {fileID: 1635276265}
   - component: {fileID: 1635276267}
   - component: {fileID: 1635276266}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 1635276268}
->>>>>>> Stashed changes
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1635,11 +1587,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-<<<<<<< Updated upstream
   m_fontAsset: {fileID: 11400000, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
-=======
-  m_fontAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_sharedMaterial: {fileID: -6934474976605310797, guid: 1a210b78b46afbf4397cd943687826c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1714,8 +1662,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635276264}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!114 &1635276268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1730,7 +1676,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionSfx: {fileID: 8300000, guid: 1184ee5b499594b22a5fd39511f52f6f, type: 3}
   sceneAudio: {fileID: 36945377}
->>>>>>> Stashed changes
 --- !u!1 &1921183456
 GameObject:
   m_ObjectHideFlags: 0
