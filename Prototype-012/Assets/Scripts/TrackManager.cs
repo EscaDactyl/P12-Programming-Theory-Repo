@@ -20,6 +20,13 @@ public class TrackManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // track sections cannot be less than 10. this functionality will be moved to GameManager once I'm ready to do that.
+        if(maxTrackSections < 10)
+        {
+            Debug.LogError("maxTrackSections too small, will not work");
+            // Some sort of MainManager exitGame sequence
+        }
+
         // Create track section arraw
         CreateTrack();
     }
@@ -32,37 +39,47 @@ public class TrackManager : MonoBehaviour
 
     private void CreateTrack()
     {
-        float trackLength = 10f; // There's probably a better way to do this?
+        float trackLength = trackPrefab.GetComponent<TrackPieceManager>().TrackLength;
+
         TrackSections = new GameObject[maxTrackSections];
         for(int n = 0; n < maxTrackSections; n++)
         {
             TrackSections[n] = Instantiate(trackPrefab, n * trackLength * Vector3.forward, trackPrefab.transform.rotation);
+            
+            if(n > 9) // let the first 100m be nothing, but then spice it up
+            {
+                TrackPieceManager thisTrackPieceManager = TrackSections[n].GetComponent<TrackPieceManager>();
+                TrackPieceManager prevTrackPieceManager = TrackSections[n - 1].GetComponent<TrackPieceManager>();
+                for (int n2 = 0; n2 < thisTrackPieceManager.TrackChildren.Length; n2++)
+                {
+                    thisTrackPieceManager.RandomizeTrackChild(n2, prevTrackPieceManager.TrackChildren[n2].EndYCoord);
+                }
+            }
         }
     }
 
     private void RecycleTrack()
     {
-        float farthestPosZ = 0;
         float trackLength = 10f;
-        int needsToReplace = -1;
 
-        for (int n = 0; n < maxTrackSections; n++)
+        if (PlayerController.instance.playerPos.z > TrackSections[0].transform.position.z + 3f * trackLength)
         {
-            if (TrackSections[n].transform.position.z > farthestPosZ)
+            Destroy(TrackSections[0]);
+            for (int n = 1; n < maxTrackSections; n++)
             {
-                farthestPosZ = TrackSections[n].transform.position.z;
+                TrackSections[n - 1] = TrackSections[n]; // Shift everything back one
             }
-           if (PlayerController.instance.playerPos.z > TrackSections[n].transform.position.z + 1.5f * trackLength)
+
+            // Probably smarter ways to do these, but we'll keep it here for now
+            float farthestPosZ = TrackSections[maxTrackSections - 2].transform.position.z;
+
+            TrackSections[maxTrackSections - 1] = Instantiate(trackPrefab, (farthestPosZ + trackLength) * Vector3.forward, trackPrefab.transform.rotation);
+            TrackPieceManager thisTrackPieceManager = TrackSections[maxTrackSections - 1].GetComponent<TrackPieceManager>();
+            TrackPieceManager prevTrackPieceManager = TrackSections[maxTrackSections - 2].GetComponent<TrackPieceManager>();
+            for (int n2 = 0; n2 < thisTrackPieceManager.TrackChildren.Length; n2++)
             {
-                Destroy(TrackSections[n]);
-                needsToReplace = n;
+                thisTrackPieceManager.RandomizeTrackChild(n2, prevTrackPieceManager.TrackChildren[n2].EndYCoord);
             }
         }
-
-        if (needsToReplace > -1)
-        {
-            TrackSections[needsToReplace] = Instantiate(trackPrefab, (farthestPosZ + trackLength) * Vector3.forward, trackPrefab.transform.rotation);
-        }
-
     }
 }

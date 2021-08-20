@@ -10,8 +10,12 @@ public class CameraFollow : MonoBehaviour
     // This is a camera function so LateUpdate
     void LateUpdate()
     {
-        transform.position = PlayerController.instance.playerPos + cameraOffset;
+        // Only if it's not game over
 
-        transform.LookAt(PlayerController.instance.playerPos + Vector3.forward * lookAheadDistance);
+        if (!GameManager.instance.gameOver)
+        {
+            transform.position = PlayerController.instance.playerPos + cameraOffset;
+            transform.LookAt(PlayerController.instance.playerPos + Vector3.forward * lookAheadDistance);
+        }
     }
 }
