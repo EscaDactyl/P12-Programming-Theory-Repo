@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6555148898057822008}
   m_Layer: 0
   m_Name: TrackPiece
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9538fc492bd1044e8381f00c0602bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackPieces: []
 --- !u!1001 &58805105954772317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +53,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6923791582450597303}
     m_Modifications:
+    - target: {fileID: 4849529865739605698, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
     - target: {fileID: 4849529866213427714, guid: 969b20812a8f19d479241e728b26a016, type: 3}
       propertyPath: m_Name
       value: TrackSectionL
@@ -102,6 +105,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4849529867122047805, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849529867557530712, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 969b20812a8f19d479241e728b26a016, type: 3}
 --- !u!4 &4871794557192593240 stripped
@@ -116,6 +127,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6923791582450597303}
     m_Modifications:
+    - target: {fileID: 4849529865739605698, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
     - target: {fileID: 4849529866213427714, guid: 969b20812a8f19d479241e728b26a016, type: 3}
       propertyPath: m_Name
       value: TrackSectionR
@@ -164,6 +179,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4849529867122047805, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849529867557530712, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 969b20812a8f19d479241e728b26a016, type: 3}
 --- !u!4 &7166413158187880174 stripped
@@ -178,6 +201,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6923791582450597303}
     m_Modifications:
+    - target: {fileID: 4849529865739605698, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
     - target: {fileID: 4849529866213427714, guid: 969b20812a8f19d479241e728b26a016, type: 3}
       propertyPath: m_Name
       value: TrackSectionM
@@ -225,6 +252,14 @@ PrefabInstance:
     - target: {fileID: 4849529866213427717, guid: 969b20812a8f19d479241e728b26a016, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849529867122047805, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849529867557530712, guid: 969b20812a8f19d479241e728b26a016, type: 3}
+      propertyPath: m_TagString
+      value: Track
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 969b20812a8f19d479241e728b26a016, type: 3}

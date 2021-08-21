@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4849529865739605700}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,7 +89,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4849529865739605698}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 558b33aba166eb84fa036791442c8472, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4849529866213427717}
   m_Layer: 0
   m_Name: TrackSection
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 4849529867122047807}
   m_Layer: 0
   m_Name: Right Incline
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,7 +217,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4849529867122047805}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 558b33aba166eb84fa036791442c8472, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 4849529867557530714}
   m_Layer: 0
   m_Name: Left Incline
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +312,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4849529867557530712}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 558b33aba166eb84fa036791442c8472, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

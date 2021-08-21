@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7760790751323468482}
   m_Layer: 0
   m_Name: Ball_Beachball
-  m_TagString: Untagged
+  m_TagString: Ballz
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8796240239159726192}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1cbe171a4f68e5a45ad7d66f804d5341, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

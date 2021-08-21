@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class BallzEye : Ballz
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float homingStrength = 10.0f;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        PushEyeTowardsPlayer();
+    }
+    private void PushEyeTowardsPlayer()
+    {
+        Rigidbody eyeRb = GetComponent<Rigidbody>();
+
+        Vector3 normalizedDirection = (PlayerController.instance.playerPos - transform.position).normalized;
+
+        eyeRb.AddForce(normalizedDirection * eyeRb.mass * homingStrength * Time.deltaTime, ForceMode.Force);
     }
 }

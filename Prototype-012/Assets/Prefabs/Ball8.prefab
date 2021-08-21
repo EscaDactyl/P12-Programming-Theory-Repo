@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5867731642998336305}
   m_Layer: 0
   m_Name: Ball8
-  m_TagString: Untagged
+  m_TagString: Ballz
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3853239464001139217}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 558b33aba166eb84fa036791442c8472, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

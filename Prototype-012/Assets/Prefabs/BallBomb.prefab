@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -4062734266311221129}
   m_Layer: 0
   m_Name: BallBomb
-  m_TagString: Untagged
+  m_TagString: Ballz
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,6 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af8300cf09043d47a34ee7a51e13ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdownTime: 5
+  explosionPfxObj: {fileID: 711800155661236852, guid: 53ee16b67aa9411429ef3bb0d3679638, type: 3}
+  bombStrength: 10
 --- !u!54 &-5875400785585755120
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -139,7 +142,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65190049802533031}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 558b33aba166eb84fa036791442c8472, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
