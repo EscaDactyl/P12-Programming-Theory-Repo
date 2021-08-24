@@ -18,7 +18,7 @@ public class TrackPieceManager : MonoBehaviour
     public TrackChild[] TrackChildren { get; private set; }
 
     // Backing fields
-    const float backingTrackLength = 10.0f;
+    const float backingTrackLength = 5.0f;
     const float backingTrackThickness = 0.25f;
 
     // read-only useful constants
@@ -29,6 +29,11 @@ public class TrackPieceManager : MonoBehaviour
     public float TrackThickness
     {
         get { return backingTrackThickness;  }
+    }
+
+    public int TrackChildCount
+    {
+        get { return TrackChildren.Length; }
     }
 
     void Awake()
@@ -52,7 +57,7 @@ public class TrackPieceManager : MonoBehaviour
 
         GameObject trackPiece = TrackChildren[index].TrackSection;
         float centralYCoord = 0.0f;
-        TrackChildren[index].EndYCoord = (beginYCoord + Random.Range(-5.0f, 5.0f) + centralYCoord) / 2;
+        TrackChildren[index].EndYCoord = (beginYCoord + Random.Range(-3.75f, 3.75f) + centralYCoord) / 2;
         float deltaYCoord = TrackChildren[index].EndYCoord - beginYCoord;
 
         // TRIGONOMETRY TIME

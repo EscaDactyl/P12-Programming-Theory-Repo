@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4849529865739605702}
   - component: {fileID: 4849529865739605703}
   - component: {fileID: 4849529865739605700}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor
   m_TagString: Track
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4849529866213427717}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TrackSection
   m_TagString: Track
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4849529867122047809}
   - component: {fileID: 4849529867122047806}
   - component: {fileID: 4849529867122047807}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Right Incline
   m_TagString: Track
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 4849529867557530716}
   - component: {fileID: 4849529867557530717}
   - component: {fileID: 4849529867557530714}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Left Incline
   m_TagString: Track
   m_Icon: {fileID: 0}

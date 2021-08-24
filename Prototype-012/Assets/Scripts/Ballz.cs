@@ -17,10 +17,23 @@ public class Ballz : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Player") && !GameManager.instance.gameOver)
+        // Hits player, not game over, and not invincible from dashing
+        if(collision.gameObject.CompareTag("Player") && !GameManager.instance.gameOver && PlayerController.instance.dashSpeed == 0)
         {
             GameManager.instance.gameOver = true;
-            StartCoroutine(collision.gameObject.GetComponent<PlayerController>().KillPlayer());
+            StartCoroutine(PlayerController.instance.KillPlayer());
+        }
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        Rigidbody thisRb = GetComponent<Rigidbody>();
+        float explosionStrength = 100000f;
+        float blastBurstRadius = 30f;
+
+        if(other.gameObject.CompareTag("BlastBurstSpell"))
+        {
+            thisRb.AddExplosionForce(explosionStrength, PlayerController.instance.playerPos, blastBurstRadius);
         }
     }
 

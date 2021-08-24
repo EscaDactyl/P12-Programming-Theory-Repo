@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    // It's called BallStruct but it spawns powerups too
     struct BallStruct
     {
         public GameObject BallObj {get;}
@@ -22,35 +22,83 @@ public class GameManager : MonoBehaviour
         }
     }
     
-
     public static GameManager instance;
-    
+    public Camera currentCamera;
+    public bool gameOver = false;
+
+    public void SpawnAThing(float zPos)
+    {
+        int slots = TrackManager.instance.TrackSections[0].GetComponent<TrackPieceManager>().TrackChildCount;
+        int slotAdj = 0;
+        if (slots % 2 == 1)
+        {
+            slotAdj = 1;
+        }
+        float xPos = Random.Range(-(slots - slotAdj) / 2, (slots - slotAdj) / 2 + 1) * 1.616f;
+        float yOffset = 0.5f;
+        float startingY = 5.0f;
+        Vector3 raycastTopPos = new Vector3(xPos, startingY, zPos);
+
+        RaycastHit colliderDetected;
+        bool didCastHit = Physics.Raycast(raycastTopPos, Vector3.down, out colliderDetected, startingY * 2, LayerMask.GetMask("Track")); // This should get the raycast hit info for the position desired
+        float yPos = startingY - colliderDetected.distance + yOffset;
+
+        GameObject ballToSpawn = ballz[PickABallIndex()].BallObj;
+        Vector3 spawnPos = new Vector3(xPos, yPos, zPos);
+
+        /* Testing code
+        if (didCastHit)
+        {
+            Debug.Log("didCastHit: " + didCastHit + " Detected Pos: " + (startingY - colliderDetected.distance) + " collider transform: " + colliderDetected.transform.position);
+        }
+        else
+        {
+            Debug.LogError("didCastHit: " + didCastHit);
+        }
+        */
+
+        GameObject thisBall = Instantiate(ballToSpawn, spawnPos, ballToSpawn.transform.rotation);
+
+        if (thisBall.CompareTag("Ballz")) // Orbz don't have rbs
+        {
+            Rigidbody thisRb = thisBall.GetComponent<Rigidbody>();
+
+            thisRb.AddForce(Random.Range(0f, 10f) * thisRb.mass * Vector3.back, ForceMode.Impulse);
+            thisRb.AddTorque(new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)) * thisRb.mass, ForceMode.Impulse);
+        }
+    }
+
     BallStruct[] ballz;
-    [SerializeField] GameObject[] editBallz;
+    [SerializeField] GameObject[] editThingsToSpawn;
     [SerializeField] float[] editOddz;
 
-    public Camera currentCamera;
-
-    public bool gameOver = false;
     void Awake()
     {
         instance = this;
         currentCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         InitializeBallz();
-        InvokeRepeating("SpawnABall", 5f, 1f);
+    }
+
+    private void Update()
+    {
+        if (!gameOver)
+        {
+            UIManagerMain.instance.UpdateTime();
+            UIManagerMain.instance.UpdateSpellRecharge();
+        }
     }
 
     private void InitializeBallz()
     {
-        int arrayLength = editBallz.Length;
+        int arrayLength = editThingsToSpawn.Length;
         ballz = new BallStruct[arrayLength];
         float totalOddz = 0.0f;
         float cumulOddz = 0.0f;
 
         for (int n = 0; n < arrayLength; n++)
         {
-            ballz[n] = new BallStruct(editBallz[n], editOddz[n]);
+            ballz[n] = new BallStruct(editThingsToSpawn[n], editOddz[n]);
             totalOddz += editOddz[n];
         }
 
@@ -59,7 +107,7 @@ public class GameManager : MonoBehaviour
             ballz[n].MinRandomRange = cumulOddz;
             ballz[n].MaxRandomRange = cumulOddz + ballz[n].Odds / totalOddz;
             cumulOddz = ballz[n].MaxRandomRange;
-        }
+         }
     }
 
     private int PickABallIndex()
@@ -78,19 +126,5 @@ public class GameManager : MonoBehaviour
         return ballz.Length;
     }
     
-    private void SpawnABall()
-    {
-        float xPos = Random.Range(-1, 2) * 1.616f;
-        float zOffset = Random.Range(50f, 150f);
-        GameObject ballToSpawn = ballz[PickABallIndex()].BallObj;
-        Vector3 spawnPos = new Vector3(xPos, 12f, PlayerController.instance.playerPos.z + zOffset);
-
-        GameObject thisBall = Instantiate(ballToSpawn, spawnPos, ballToSpawn.transform.rotation);
-
-        Rigidbody thisRb = thisBall.GetComponent<Rigidbody>();
-
-        thisRb.AddForce(Random.Range(0f, 5f) * thisRb.mass * Vector3.back, ForceMode.Impulse);
-        thisRb.AddTorque(new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)) * thisRb.mass, ForceMode.Impulse);
-    }
     
 }

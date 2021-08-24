@@ -8,11 +8,13 @@ TagManager:
   - Ballz
   - Pfx
   - Manager
+  - Orbz
+  - BlastBurstSpell
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Track
   - Water
   - UI
   - 

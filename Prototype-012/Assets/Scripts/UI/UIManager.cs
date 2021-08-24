@@ -6,38 +6,11 @@ using UnityEngine.UI;
 using UnityEditor;
 
 
-public class UIManager : MonoBehaviour
+public class UIManager : UIManagerParent
 {
-    [SerializeField] GameObject[] buttonSelectionArray;
-    [SerializeField] GameObject cursor;
-    [SerializeField] Image blackImage;
-
-    [SerializeField] AudioClip cursorSfx;
-    [SerializeField] AudioSource sceneAudio;
-
-    public static UIManager instance;
-
-    // Private object characteristics
-    bool axisDown = false;
-    bool selectionMade = false;
-
     // Public object characteristics
+    public static UIManager instance;
     public int buttonSelectionIndex = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        MoveCursor(buttonSelectionIndex);
-        instance = this;
-        blackImage.gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        VertInput();
-        CheckForSelection();
-    }
 
     public void MoveCursor(int buttonIndex)
     {
@@ -62,6 +35,30 @@ public class UIManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    [SerializeField] GameObject[] buttonSelectionArray;
+    [SerializeField] GameObject cursor;
+
+    [SerializeField] AudioClip cursorSfx;
+    [SerializeField] AudioSource sceneAudio;
+
+
+    // Private object characteristics
+    bool axisDown = false;
+    bool selectionMade = false;
+
+    protected override void UISceneAwake()
+    {
+        MoveCursor(buttonSelectionIndex);
+        instance = this;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        VertInput();
+        CheckForSelection();
     }
 
     private void VertInput()
@@ -126,20 +123,4 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeScreen(float beginAlpha, float endAlpha, float duration)
-    {
-
-        float timeElapsed = 0.0f;
-        float deltaAlpha = endAlpha - beginAlpha;
-
-        blackImage.color = new Color(0.0f, 0.0f, 0.0f, beginAlpha);
-        blackImage.gameObject.SetActive(true);
-
-        while (timeElapsed < duration)
-        {
-            yield return new WaitForEndOfFrame();
-            timeElapsed += Time.deltaTime;
-            blackImage.color = new Color (0.0f, 0.0f, 0.0f, beginAlpha + deltaAlpha * timeElapsed / duration);
-        }
-    }
 }

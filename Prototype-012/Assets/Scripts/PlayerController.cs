@@ -2,116 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(1000)]
 public class PlayerController : MonoBehaviour
 {
-    // Serializable Parameters    
-    [SerializeField] float lateralSpeed = 4.8f; // probably make it the width of the track
-    [SerializeField] float lateralBound = 4.4f; // probably make it the width of the track
-    [SerializeField] float minRunSpeed = 7.2f;
-    [SerializeField] float maxRunSpeed = 14.4f;
-
-    // objects used throughout class
-    Animator playerAnim;
-    Rigidbody playerRb;
-
     // instance so that this can be referenced
     public static PlayerController instance;
 
     // visible player position to other scripts
     public Vector3 playerPos { get; private set; }
     public float currentRunSpeed;
+    public float minRunSpeed = 7.2f;
+    public float maxRunSpeed = 14.4f;
+    public float dashSpeed = 0.0f;
 
-
-    // A particle explosion before making the player die
-    [SerializeField] ParticleSystem smokePfx;
-    [SerializeField] ParticleSystem sparksPfx;
-    [SerializeField] ParticleSystem firePfx;
-    [SerializeField] GameObject explosionPfxObj;
-
-    // Start is called before the first frame update
-    void Start()
+    public void SetLight(float lightIntensity, Color lightColor)
     {
-        instance = this;
-        currentRunSpeed = minRunSpeed;
-        playerAnim = GetComponent<Animator>();
-        playerRb = GetComponent<Rigidbody>();
+        playerLight.intensity = lightIntensity;
+        playerLight.color = lightColor;
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject InstantiateBlastEffect()
     {
-        if (!GameManager.instance.gameOver)
-        {
-            float horizInput = Input.GetAxis("Horizontal");
-            float vertInput = Input.GetAxis("Vertical");
-
-            if (horizInput != 0)
-            {
-                MovePlayer(horizInput);
-            }
-
-            if (vertInput != 0)
-            {
-                AdjustPlayerSpeed(vertInput);
-            }
-
-            transform.Translate(currentRunSpeed * Time.deltaTime * Vector3.forward);
-
-            CheckForGrounding();
-
-            UpdatePlayerGamePosition();
-        }
+        return Instantiate(blastPfxObj, transform.position, blastPfxObj.transform.rotation);
     }
 
-    public void MovePlayer(float horizInput)
+    public GameObject InstantiateBurstEffect()
     {
-        transform.Translate(horizInput * lateralSpeed * Time.deltaTime * Vector3.right);
-        if(transform.position.x > lateralBound)
-        {
-            transform.Translate((transform.position.x - lateralBound) * Vector3.left);
-        }
-        else if (transform.position.x < -lateralBound)
-        {
-            transform.Translate((transform.position.x + lateralBound) * Vector3.left);
-        }
+        return Instantiate(burstPfxObj, transform.position, burstPfxObj.transform.rotation);
     }
 
-    public void AdjustPlayerSpeed(float vertInput)
+    public void SetDustEffect(bool isOn)
     {
-        float runSpeedRange = maxRunSpeed - minRunSpeed;
-
-        // two seconds to go from min to max speed
-        currentRunSpeed += vertInput * Time.deltaTime * runSpeedRange / 2.0f;
-        if (currentRunSpeed > maxRunSpeed)
-        {
-            currentRunSpeed = maxRunSpeed;
-        }
-        else if (currentRunSpeed < minRunSpeed)
-        {
-            currentRunSpeed = minRunSpeed;
-        }
-    }
-
-    // The game position might not be the actual position, especially when the player dies
-    private void UpdatePlayerGamePosition()
-    {
-        playerPos = transform.position;
-    }
-
-    private void CheckForGrounding()
-    {
-        bool isGrounded = true;
-
-        Collider playerCollider = GetComponentInChildren<CapsuleCollider>();
-        // bool isGrounded = Physics.BoxCast(playerCollider.bounds.center, playerCollider.bounds.extents, Vector3.down, transform.rotation, Mathf.Infinity);
-        if (transform.position.y < -10f)
-            isGrounded = false;
-
-        if(!isGrounded)
-        {
-            GameManager.instance.gameOver = true;
-            StartCoroutine(PlayerFallToDoom());
-        }
+        dustPfx.gameObject.SetActive(isOn);
     }
 
     public IEnumerator KillPlayer()
@@ -207,5 +129,186 @@ public class PlayerController : MonoBehaviour
         GameObject thisExplosion = Instantiate(explosionPfxObj, transform.position, explosionPfxObj.transform.rotation);
         thisExplosion.GetComponent<ParticleSystem>().Play();
         gameObject.SetActive(false);
+    }
+
+    // consts that I'm not changing
+    const float lateralSpeed = 4.0f; // It's about half the track now
+    const float lateralBound = 4.0f;
+
+    // private changeable value (until it's not)
+    private float maxSpeed = 57.6f;
+
+    // A particle explosion before making the player die
+    [SerializeField] ParticleSystem dustPfx;
+    [SerializeField] ParticleSystem smokePfx;
+    [SerializeField] ParticleSystem sparksPfx;
+    [SerializeField] ParticleSystem firePfx;
+    [SerializeField] GameObject blastPfxObj;
+    [SerializeField] GameObject burstPfxObj;
+    [SerializeField] GameObject explosionPfxObj;
+
+    // Serializable Parameters    
+    [SerializeField] Orbz heldOrbz;
+    [SerializeField] GameObject auxSlot;
+
+    // objects used throughout class
+    Animator playerAnim;
+    Rigidbody playerRb;
+    Light playerLight;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        instance = this;
+        currentRunSpeed = minRunSpeed;
+        playerAnim = GetComponent<Animator>();
+        playerLight = GetComponent<Light>();
+        playerRb = GetComponent<Rigidbody>();
+        heldOrbz.isPowerup = false;
+        UIManagerMain.instance.NewSpell(heldOrbz.GetOrbName(), heldOrbz.GetOrbColor(), heldOrbz.GetRecharge());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!GameManager.instance.gameOver)
+        {
+            float horizInput = Input.GetAxis("Horizontal");
+            float vertInput = Input.GetAxis("Vertical");
+            bool castSpell = Input.GetButtonDown("Fire1");
+
+            UpdatePlayerSpeedBounds();
+
+            if (horizInput != 0)
+            {
+                MovePlayer(horizInput);
+            }
+
+            if (vertInput != 0)
+            {
+                AdjustPlayerSpeed(vertInput);
+            }
+
+            if (castSpell && UIManagerMain.instance.CanCastSpell()) // I probably should move this away from the UI but I'm lazy
+            {
+                StartCoroutine(SpellAnimationDelay());
+            }
+
+            transform.Translate((currentRunSpeed + dashSpeed) * Time.deltaTime * Vector3.forward);
+
+            CheckForGrounding();
+
+            UIManagerMain.instance.UpdateDistance(transform.position.z - playerPos.z); // Distance since last frame
+            UIManagerMain.instance.UpdateScore((currentRunSpeed + dashSpeed) * (currentRunSpeed + dashSpeed) * Time.deltaTime); // Velocity squared down to frame
+            UIManagerMain.instance.UpdateSpeed(minRunSpeed, (currentRunSpeed + dashSpeed), maxRunSpeed, maxSpeed);
+            UpdatePlayerGamePosition(); // this updates the frame
+        }
+    }
+
+    private void MovePlayer(float horizInput)
+    {
+        transform.Translate(horizInput * lateralSpeed * Time.deltaTime * Vector3.right);
+        if (transform.position.x > lateralBound)
+        {
+            transform.Translate((transform.position.x - lateralBound) * Vector3.left);
+        }
+        else if (transform.position.x < -lateralBound)
+        {
+            transform.Translate((transform.position.x + lateralBound) * Vector3.left);
+        }
+    }
+
+    private void AdjustPlayerSpeed(float vertInput)
+    {
+        float runSpeedRange = maxRunSpeed - minRunSpeed;
+
+        // two seconds to go from min to max speed
+        currentRunSpeed += vertInput * Time.deltaTime * runSpeedRange / 2.0f;
+        if (currentRunSpeed > maxRunSpeed)
+        {
+            currentRunSpeed = maxRunSpeed;
+        }
+        else if (currentRunSpeed < minRunSpeed)
+        {
+            currentRunSpeed = minRunSpeed;
+        }
+    }
+
+    private void UpdatePlayerSpeedBounds()
+    {
+        float maxSpeedIncreasePerMinute = 2.88f; // This is much more intuitive for difficulty adjustments than per second (2.88f = hit max at 15 minutes of play)
+
+        minRunSpeed += maxSpeedIncreasePerMinute / 3 / 60 * Time.deltaTime; // Even though it starts at 1/2 of max speed, make it go up slower for more play
+        maxRunSpeed += maxSpeedIncreasePerMinute / 60 * Time.deltaTime;
+
+        // Bounding
+        AdjustPlayerSpeed(0);
+        if ((maxRunSpeed + minRunSpeed) > maxSpeed)
+        {
+            maxSpeed = maxRunSpeed + minRunSpeed;
+        }
+    }
+
+    // The game position might not be the actual position, especially when the player dies
+    private void UpdatePlayerGamePosition()
+    {
+        playerPos = transform.position;
+    }
+
+    private void CheckForGrounding()
+    {
+        bool isGrounded = true;
+
+        Collider playerCollider = GetComponentInChildren<CapsuleCollider>();
+        // bool isGrounded = Physics.BoxCast(playerCollider.bounds.center, playerCollider.bounds.extents, Vector3.down, Quaternion.Identity, Mathf.Infinity);
+        if (transform.position.y < -10f)
+            isGrounded = false;
+
+        if (!isGrounded)
+        {
+            GameManager.instance.gameOver = true;
+            StartCoroutine(PlayerFallToDoom());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!GameManager.instance.gameOver && other.CompareTag("Orbz"))
+        {
+            // DelayedDestroy tha current item to allow spells to finish
+            DelayedDestroy(heldOrbz.gameObject);
+
+            // Put the new item in
+            heldOrbz = other.gameObject.GetComponent<Orbz>();
+            heldOrbz.gameObject.transform.SetParent(auxSlot.transform);
+            heldOrbz.gameObject.transform.localPosition = Vector3.zero;
+            heldOrbz.gameObject.transform.localScale = 4.0f * Vector3.one;
+
+            // Call the UI function
+            UIManagerMain.instance.NewSpell(heldOrbz.GetOrbName(), heldOrbz.GetOrbColor(), heldOrbz.GetRecharge());
+
+            // Score a thousand points
+            UIManagerMain.instance.UpdateScore(1000);
+        }
+    }
+
+    IEnumerator SpellAnimationDelay()
+    {
+        float spellDelay = 0.3f; // based on transitions from animator inspector
+
+        UIManagerMain.instance.CastSpell(spellDelay);
+        playerAnim.SetTrigger("isCastingT");
+        yield return new WaitForSeconds(spellDelay);
+        heldOrbz.CastSpell();
+    }
+
+    IEnumerator DelayedDestroy(GameObject thisObject)
+    {
+        float theLongestCoroutineTimeYouCanThinkOf = 0.6f; // Look, let's be self-explanatory here :P
+        thisObject.SetActive(false);
+
+        yield return new WaitForSeconds(theLongestCoroutineTimeYouCanThinkOf);
+
+        Destroy(thisObject);
     }
 }
