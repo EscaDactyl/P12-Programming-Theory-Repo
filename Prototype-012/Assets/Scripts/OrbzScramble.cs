@@ -21,6 +21,7 @@ public class OrbzScramble : Orbz
 
     public override void CastSpell()
     {
+        PlaySpellSound();
         float fxDelay = 2.0f;
         PlayerController.instance.SetLight(2.0f, GetOrbColor());
         TrackManager.instance.ScrambleTrack();

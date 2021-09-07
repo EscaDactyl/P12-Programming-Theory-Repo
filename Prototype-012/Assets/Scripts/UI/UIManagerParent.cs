@@ -83,7 +83,7 @@ public abstract class UIManagerParent : MonoBehaviour
 
     protected void VertInput()
     {
-        float vertInput = Input.GetAxis("Vertical");
+        float vertInput = Input.GetAxisRaw("Vertical");
 
         if (vertInput != 0 && !axisDown && !selectionMade)
         {

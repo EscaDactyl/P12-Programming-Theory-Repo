@@ -21,6 +21,7 @@ public class OrbzBlast : Orbz
     public override void CastSpell()
     {
         float fxDelay = 1.0f;
+        PlaySpellSound();
         PlayerController.instance.SetLight(2.0f, GetOrbColor());
         GameObject thisPfx = PlayerController.instance.InstantiateBlastEffect();
         StartCoroutine(CheckForEndFx(thisPfx, fxDelay));

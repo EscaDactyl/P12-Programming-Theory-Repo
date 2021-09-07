@@ -20,6 +20,8 @@ public class UIManagerMain : UIManagerParent
     [SerializeField] Slider spellSlider;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Image backBlackImage;
+    [SerializeField] GameObject introPanel;
+    [SerializeField] AudioClip introSfx;
 
     public bool CanCastSpell()
     {
@@ -35,9 +37,9 @@ public class UIManagerMain : UIManagerParent
         spellSlider.value = 0.0f;
     }
 
-    public void FadeInStart()
+    public void IntroMessage()
     {
-        StartCoroutine(FadeColor(blackImage, 1.0f, 0.0f, 2.0f));
+        StartCoroutine(IntroMessageCoroutine());
     }
 
     public IEnumerator LaunchGameOverMenu()
@@ -149,6 +151,7 @@ public class UIManagerMain : UIManagerParent
     protected override void UISceneAwake()
     {
         instance = this;
+        blackImage.gameObject.SetActive(true); // For visibility in the editor I have it on false by default
     }
 
 
@@ -157,5 +160,30 @@ public class UIManagerMain : UIManagerParent
         yield return new WaitForSeconds(spellLengthDelay);
         isCasting = false;
     }
+    void FadeInStart()
+    {
+        StartCoroutine(FadeColor(blackImage, 1.0f, 0.0f, 2.0f));
+    }
+
+    private IEnumerator IntroMessageCoroutine()
+    {
+        float delayTime = 0.75f;
+
+        Time.timeScale = 0.0f; // Pause the game
+        yield return new WaitForSecondsRealtime(delayTime);
+
+        for (int n = 0; n < introPanel.transform.childCount; n++)
+        {
+            sceneAudio.PlayOneShot(introSfx);
+            introPanel.transform.GetChild(n).gameObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(delayTime);
+        }
+
+        Time.timeScale = 1.0f;
+        introPanel.SetActive(false);
+        FadeInStart();
+        GameManager.instance.gameActive = true;
+    }
+
 
 }

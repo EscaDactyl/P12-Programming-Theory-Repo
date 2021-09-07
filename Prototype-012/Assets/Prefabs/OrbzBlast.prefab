@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPowerup: 1
+  spellSfx: {fileID: 8300000, guid: ad1e7e92faf364edea5027d7c47ed724, type: 3}
 --- !u!135 &4004577699605735911
 SphereCollider:
   m_ObjectHideFlags: 0

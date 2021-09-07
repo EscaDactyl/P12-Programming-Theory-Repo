@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     // visible player position to other scripts
     public Vector3 playerPos { get; private set; }
+    public AudioSource playerAudio { get; private set; }
     public float currentRunSpeed;
     public float minRunSpeed = 7.2f;
     public float maxRunSpeed = 14.4f;
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator KillPlayer()
     {
+        playerAudio.PlayOneShot(hitSfx);
+
         float phaseTime = 1.0f;
         float timeElapsed = 0.0f;
         Vector3 startingCameraPos = GameManager.instance.currentCamera.transform.position;
@@ -63,6 +66,7 @@ public class PlayerController : MonoBehaviour
         timeElapsed = 0.0f;
         Vector3 origCameraPos = GameManager.instance.currentCamera.transform.position;
         Quaternion origCameraRot = GameManager.instance.currentCamera.transform.rotation;
+        playerAudio.PlayOneShot(cameraShakeSfx);
 
         while (timeElapsed < phaseTime)
         {
@@ -85,6 +89,7 @@ public class PlayerController : MonoBehaviour
         Vector3 finalCameraPos = playerPos;
 
         playerAnim.SetTrigger("isFallingT");
+        playerAudio.PlayOneShot(fallingSfx);
 
         while (timeElapsed < phaseTime)
         {
@@ -127,6 +132,7 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.currentCamera.transform.LookAt(transform);
         }
 
+        playerAudio.PlayOneShot(splatSfx);
         GameObject thisExplosion = Instantiate(explosionPfxObj, transform.position, explosionPfxObj.transform.rotation);
         thisExplosion.GetComponent<ParticleSystem>().Play();
         phaseTime = 0.5f;
@@ -150,6 +156,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject blastPfxObj;
     [SerializeField] GameObject burstPfxObj;
     [SerializeField] GameObject explosionPfxObj;
+    [SerializeField] AudioClip hitSfx;
+    [SerializeField] AudioClip powerUpSfx;
+    [SerializeField] AudioClip cameraShakeSfx;
+    [SerializeField] AudioClip fallingSfx;
+    [SerializeField] AudioClip splatSfx;
 
     // Serializable Parameters    
     [SerializeField] Orbz heldOrbz;
@@ -167,6 +178,7 @@ public class PlayerController : MonoBehaviour
         instance = this;
         currentRunSpeed = minRunSpeed;
         playerAnim = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
         playerLight = GetComponent<Light>();
         playerRb = GetComponent<Rigidbody>();
         heldOrbz.isPowerup = false;
@@ -181,6 +193,7 @@ public class PlayerController : MonoBehaviour
             float horizInput = Input.GetAxis("Horizontal");
             float vertInput = Input.GetAxis("Vertical");
             bool castSpell = Input.GetButtonDown("Fire1");
+            bool pauseGame = Input.GetButtonDown("Cancel");
 
             UpdatePlayerSpeedBounds();
 
@@ -197,6 +210,11 @@ public class PlayerController : MonoBehaviour
             if (castSpell && UIManagerMain.instance.CanCastSpell()) // I probably should move this away from the UI but I'm lazy
             {
                 StartCoroutine(SpellAnimationDelay());
+            }
+
+            if (pauseGame)
+            {
+                GameManager.instance.PauseGame();
             }
 
             transform.Translate((currentRunSpeed + dashSpeed) * Time.deltaTime * Vector3.forward);
@@ -290,6 +308,9 @@ public class PlayerController : MonoBehaviour
 
             // Score a thousand points
             UIManagerMain.instance.UpdateScore(1000);
+
+            // Power up Sound!
+            playerAudio.PlayOneShot(powerUpSfx);
         }
     }
 

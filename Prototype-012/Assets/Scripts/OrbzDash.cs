@@ -22,6 +22,7 @@ public class OrbzDash : Orbz
     {
         float dashTimeLeft = 0.5f;
 
+        PlaySpellSound();
         PlayerController.instance.dashSpeed = PlayerController.instance.minRunSpeed;
         PlayerController.instance.SetLight(2.0f,GetOrbColor());
         PlayerController.instance.SetDustEffect(true);

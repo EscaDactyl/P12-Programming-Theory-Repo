@@ -6,8 +6,9 @@ public class GameManager : MonoBehaviour
 { 
     public static GameManager instance;
     public Camera currentCamera;
-    public bool gameActive = true;
+    public bool gameActive = false;
     public bool gameOver = false;
+    public bool gamePaused = false;
 
     public void SpawnAThing(float zPos)
     {
@@ -51,6 +52,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        gameActive = false;
+        gamePaused = true;
+        Time.timeScale = 0.0f;
+        UIManagerPause.instance.FadePause();
+    }
+
+    public void UnpauseGame()
+    {
+        gameActive = true;
+        gamePaused = false;
+        Time.timeScale = 1.0f;
+        UIManagerPause.instance.UnfadePause();
+    }
+
     // It's called BallStruct but it spawns powerups too
     struct BallStruct
     {
@@ -79,7 +96,7 @@ public class GameManager : MonoBehaviour
         currentCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         InitializeBallz();
-        UIManagerMain.instance.FadeInStart();
+        UIManagerMain.instance.IntroMessage();
     }
 
     private void Update()

@@ -3,7 +3,9 @@ guid: 854f75dd09420e84f8be447839457ccb
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - dingSfx: {fileID: 8300000, guid: fc8c7aa9892294b0fb6b98d1063fbbe4, type: 3}
+  - thumpSfx: {fileID: 8300000, guid: 7c2de8e149d8346748fb31ed14cc7986, type: 3}
   executionOrder: 0
   icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   userData: 

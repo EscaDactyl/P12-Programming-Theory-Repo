@@ -21,6 +21,9 @@ public abstract class Orbz : MonoBehaviour
 
     public abstract void CastSpell();
 
+    // Editor object
+    [SerializeField] AudioClip spellSfx;
+    
     // Protected script variables
     protected float timeElapsed;
     protected Light baseOrbLight;
@@ -46,6 +49,11 @@ public abstract class Orbz : MonoBehaviour
         PulseLight();
         RotateOrb();
         CheckIfLeftBehind();
+    }
+
+    protected void PlaySpellSound()
+    {
+        PlayerController.instance.playerAudio.PlayOneShot(spellSfx);
     }
 
     protected void PulseLight()
