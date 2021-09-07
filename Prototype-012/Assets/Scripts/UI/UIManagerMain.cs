@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 public class UIManagerMain : UIManagerParent
 {
@@ -17,6 +18,8 @@ public class UIManagerMain : UIManagerParent
     [SerializeField] Slider speedSliderMin;
     [SerializeField] Slider speedSliderMax;
     [SerializeField] Slider spellSlider;
+    [SerializeField] GameObject gameOverPanel;
+    [SerializeField] Image backBlackImage;
 
     public bool CanCastSpell()
     {
@@ -32,6 +35,30 @@ public class UIManagerMain : UIManagerParent
         spellSlider.value = 0.0f;
     }
 
+    public void FadeInStart()
+    {
+        StartCoroutine(FadeColor(blackImage, 1.0f, 0.0f, 2.0f));
+    }
+
+    public IEnumerator LaunchGameOverMenu()
+    {
+        float gameOverFadeTime = 3.0f;
+
+        backBlackImage.gameObject.SetActive(true);
+        gameOverPanel.SetActive(true);
+
+        StartCoroutine(FadeColor(backBlackImage, 0.0f, 0.8f, gameOverFadeTime));
+
+        for (int n = 0; n < gameOverPanel.transform.childCount; n++) // turns on every one of the children of game over panel
+        {
+            StartCoroutine(FadeColor(gameOverPanel.transform.GetChild(n).gameObject, 0.0f, 1.0f, gameOverFadeTime));
+        }
+
+        yield return new WaitForSeconds(gameOverFadeTime);
+        cursor.SetActive(true);
+        GameManager.instance.gameOver = true;
+    }
+
     public void NewSpell(string spellName, Color sliderColor, float newSpellRecharge)
     {
         spellRecharge = newSpellRecharge;
@@ -44,6 +71,16 @@ public class UIManagerMain : UIManagerParent
 
         spellSlider.value = 1.0f;
         spellSlider.fillRect.GetComponent<Image>().color = newColor;
+    }
+
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    public void StartOver()
+    {
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void UpdateDistance(float distanceToAdd)
@@ -90,7 +127,6 @@ public class UIManagerMain : UIManagerParent
         timeTMP.SetText("Time: " + minutes + "' " + seconds + "\" " + centiseconds);
     }
 
-
     // private attributes
     float score;
     float distance;
@@ -98,6 +134,17 @@ public class UIManagerMain : UIManagerParent
     float spellMeter;
     float spellRecharge;
     bool isCasting = false;
+
+
+    private void Update()
+    {
+        // only valid if the game is over
+        if(GameManager.instance.gameOver)
+        {
+            VertInput();
+            CheckForSelection();
+        }
+    }
 
     protected override void UISceneAwake()
     {

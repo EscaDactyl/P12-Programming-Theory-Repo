@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectStart : SelectionItem
+public class MainSelectRestart : SelectionItem
 {
     [SerializeField] AudioClip selectionSfx;
     [SerializeField] AudioSource sceneAudio;
@@ -16,6 +16,6 @@ public class SelectStart : SelectionItem
     IEnumerator DelayedRun(float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
-        UIManager.instance.StartGame();
+        UIManagerMain.instance.StartOver();
     }
 }

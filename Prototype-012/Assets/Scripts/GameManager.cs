@@ -3,27 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
-    // It's called BallStruct but it spawns powerups too
-    struct BallStruct
-    {
-        public GameObject BallObj {get;}
-        public float Odds { get; }
-        public float MinRandomRange { get; set; }
-        public float MaxRandomRange { get; set; }
-
-        public BallStruct(GameObject ballObj, float odds)
-        {
-            // will need to insert errorchecking
-            BallObj = ballObj;
-            Odds = odds;
-            MinRandomRange = 0;
-            MaxRandomRange = odds;
-        }
-    }
-    
+{ 
     public static GameManager instance;
     public Camera currentCamera;
+    public bool gameActive = true;
     public bool gameOver = false;
 
     public void SpawnAThing(float zPos)
@@ -68,6 +51,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // It's called BallStruct but it spawns powerups too
+    struct BallStruct
+    {
+        public GameObject BallObj { get; }
+        public float Odds { get; }
+        public float MinRandomRange { get; set; }
+        public float MaxRandomRange { get; set; }
+
+        public BallStruct(GameObject ballObj, float odds)
+        {
+            // will need to insert errorchecking
+            BallObj = ballObj;
+            Odds = odds;
+            MinRandomRange = 0;
+            MaxRandomRange = odds;
+        }
+    }
+
     BallStruct[] ballz;
     [SerializeField] GameObject[] editThingsToSpawn;
     [SerializeField] float[] editOddz;
@@ -78,11 +79,12 @@ public class GameManager : MonoBehaviour
         currentCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         InitializeBallz();
+        UIManagerMain.instance.FadeInStart();
     }
 
     private void Update()
     {
-        if (!gameOver)
+        if (gameActive)
         {
             UIManagerMain.instance.UpdateTime();
             UIManagerMain.instance.UpdateSpellRecharge();

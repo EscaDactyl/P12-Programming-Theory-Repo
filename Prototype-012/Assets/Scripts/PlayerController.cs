@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = Vector3.zero;
         playerRb.angularVelocity = Vector3.zero;
 
-        // Camera shakes for one second
+        // Camera shakes
         phaseTime = 0.5f;
         timeElapsed = 0.0f;
         Vector3 origCameraPos = GameManager.instance.currentCamera.transform.position;
@@ -74,11 +74,12 @@ public class PlayerController : MonoBehaviour
 
         // Set it back to the original
         GameManager.instance.currentCamera.transform.SetPositionAndRotation(origCameraPos,origCameraRot);
+        StartCoroutine(UIManagerMain.instance.LaunchGameOverMenu());
     }
 
     public IEnumerator PlayerFallToDoom()
     {
-        float phaseTime = 1.0f;
+        float phaseTime = 0.5f;
         float timeElapsed = 0.0f;
         Vector3 startingCameraPos = GameManager.instance.currentCamera.transform.position;
         Vector3 finalCameraPos = playerPos;
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.currentCamera.transform.LookAt(transform);
         }
 
-        phaseTime = 2.0f;
+        phaseTime = 0.5f;
         timeElapsed = 0.0f;
         smokePfx.gameObject.SetActive(true);
 
@@ -104,7 +105,7 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.currentCamera.transform.LookAt(transform);
         }
 
-        phaseTime = 2.0f;
+        phaseTime = 0.5f;
         timeElapsed = 0.0f;
         sparksPfx.gameObject.SetActive(true);
 
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.currentCamera.transform.LookAt(transform);
         }
 
-        phaseTime = 2.0f;
+        phaseTime = 0.5f;
         timeElapsed = 0.0f;
         firePfx.gameObject.SetActive(true);
 
@@ -128,7 +129,10 @@ public class PlayerController : MonoBehaviour
 
         GameObject thisExplosion = Instantiate(explosionPfxObj, transform.position, explosionPfxObj.transform.rotation);
         thisExplosion.GetComponent<ParticleSystem>().Play();
-        gameObject.SetActive(false);
+        phaseTime = 0.5f;
+        playerBody.SetActive(false);
+        yield return new WaitForSeconds(phaseTime);
+        StartCoroutine(UIManagerMain.instance.LaunchGameOverMenu());
     }
 
     // consts that I'm not changing
@@ -150,8 +154,9 @@ public class PlayerController : MonoBehaviour
     // Serializable Parameters    
     [SerializeField] Orbz heldOrbz;
     [SerializeField] GameObject auxSlot;
+    [SerializeField] GameObject playerBody;
 
-    // objects used throughout class
+    // components used throughout class
     Animator playerAnim;
     Rigidbody playerRb;
     Light playerLight;
@@ -171,7 +176,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.gameOver)
+        if (GameManager.instance.gameActive)
         {
             float horizInput = Input.GetAxis("Horizontal");
             float vertInput = Input.GetAxis("Vertical");
@@ -257,26 +262,22 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForGrounding()
     {
-        bool isGrounded = true;
+        float lethalHeight = -7.5f;
 
         Collider playerCollider = GetComponentInChildren<CapsuleCollider>();
-        // bool isGrounded = Physics.BoxCast(playerCollider.bounds.center, playerCollider.bounds.extents, Vector3.down, Quaternion.Identity, Mathf.Infinity);
-        if (transform.position.y < -10f)
-            isGrounded = false;
-
-        if (!isGrounded)
+        if (transform.position.y < lethalHeight)
         {
-            GameManager.instance.gameOver = true;
+            GameManager.instance.gameActive = false;
             StartCoroutine(PlayerFallToDoom());
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!GameManager.instance.gameOver && other.CompareTag("Orbz"))
+        if(GameManager.instance.gameActive && other.CompareTag("Orbz"))
         {
             // DelayedDestroy tha current item to allow spells to finish
-            DelayedDestroy(heldOrbz.gameObject);
+            StartCoroutine(DelayedDestroy(heldOrbz.gameObject));
 
             // Put the new item in
             heldOrbz = other.gameObject.GetComponent<Orbz>();

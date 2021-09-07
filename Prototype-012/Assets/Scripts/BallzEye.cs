@@ -8,7 +8,10 @@ public class BallzEye : Ballz
 
     void Update()
     {
-        PushEyeTowardsPlayer();
+        if (GameManager.instance.gameActive)
+        {
+            PushEyeTowardsPlayer();
+        }
     }
     private void PushEyeTowardsPlayer()
     {

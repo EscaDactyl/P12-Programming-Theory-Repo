@@ -17,10 +17,10 @@ public class Ballz : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Hits player, not game over, and not invincible from dashing
-        if(collision.gameObject.CompareTag("Player") && !GameManager.instance.gameOver && PlayerController.instance.dashSpeed == 0)
+        // Hits player, game active, and not invincible from dashing
+        if(collision.gameObject.CompareTag("Player") && GameManager.instance.gameActive && PlayerController.instance.dashSpeed == 0)
         {
-            GameManager.instance.gameOver = true;
+            GameManager.instance.gameActive = false;
             StartCoroutine(PlayerController.instance.KillPlayer());
         }
     }
